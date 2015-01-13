@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -17,7 +16,7 @@ public class DrawingView extends View {
 
     private Path drawPath;                  //drawing path
     private Paint drawPaint , canvasPaint;  //drawing and canvas paint
-    private int paintColor = 0xFF660000;    //initial color
+    private int paintColor = 0xFFFF0000;    //initial color
     private Canvas drawCanvas;              //canvas
     private Bitmap canvasBitmap;            //canvas bitmap
 
@@ -109,8 +108,8 @@ public class DrawingView extends View {
     public void setErase( boolean isErase ) {
         erase = isErase;
         if( erase ) {
-            setColor( "#FFFFFFFF" );
-            drawPaint.setXfermode( new PorterDuffXfermode( PorterDuff.Mode.CLEAR ));
+            this.setColor( "#FFFFFFFF" );
+//            drawPaint.setXfermode( new PorterDuffXfermode( PorterDuff.Mode.CLEAR ));
         }
         else {
             drawPaint.setXfermode( null );

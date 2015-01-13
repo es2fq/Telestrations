@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,9 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.UUID;
 
 public class Draw extends Activity implements OnClickListener {
 
@@ -51,12 +55,12 @@ public class Draw extends Activity implements OnClickListener {
         drawBtn  = (ImageButton)findViewById(R.id.draw_btn);
 //        eraseBtn = (ImageButton)findViewById(R.id.erase_btn);
         newBtn   = (ImageButton)findViewById(R.id.new_btn);
-//        saveBtn  = (ImageButton)findViewById(R.id.save_btn);
+        saveBtn  = (ImageButton)findViewById(R.id.save_btn);
 
         drawBtn.setOnClickListener( this );
 //        eraseBtn.setOnClickListener( this );
         newBtn.setOnClickListener( this );
-//        saveBtn.setOnClickListener( this );
+        saveBtn.setOnClickListener( this );
     }
 
     public void onClick( View view )
@@ -164,39 +168,38 @@ public class Draw extends Activity implements OnClickListener {
             newDialog.show();
         }
 
-//        else if( view.getId() == R.id.save_btn ) {
-//            AlertDialog.Builder saveDialog = new AlertDialog.Builder( this );
-//            saveDialog.setTitle( "Save drawing" );
-//            saveDialog.setMessage( "Save drawing to Gallery?" );
-//            saveDialog.setPositiveButton( "Yes" , new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog , int i) {
-//                    drawView.setDrawingCacheEnabled( true );
-//                    String imgSaved = MediaStore.Images.Media.insertImage(
-//                            MyActivity.this.getContentResolver() , drawView.getDrawingCache() ,
-//                            UUID.randomUUID().toString() + ".png" , "drawing" );
-//                    if( imgSaved != null ) {
-//                        Toast savedToast = Toast.makeText( getApplicationContext() ,
-//                                "Drawing saved to Gallery!" , Toast.LENGTH_SHORT );
-//                        savedToast.show();
-//                    }
-//                    else {
-//                        Toast unsavedToast = Toast.makeText( getApplicationContext() ,
-//                                "Uh oh! Image could not be saved." , Toast.LENGTH_SHORT );
-//                        unsavedToast.show();
-//                    }
-//                    drawView.destroyDrawingCache();
-//                }
-//            });
-//            saveDialog.setNegativeButton( "Cancel" , new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog , int i) {
-//                    dialog.cancel();
-//                }
-//            });
-//
-//            saveDialog.show();
-//        }
+        else if( view.getId() == R.id.save_btn ) {
+            AlertDialog.Builder saveDialog = new AlertDialog.Builder( this );
+            saveDialog.setTitle( "Save drawing" );
+            saveDialog.setMessage( "Save drawing to Gallery?" );
+            saveDialog.setPositiveButton( "Yes" , new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog , int i) {
+                    drawView.setDrawingCacheEnabled( true );
+                    String imgSaved = MediaStore.Images.Media.insertImage(
+                            getContentResolver() , drawView.getDrawingCache() ,
+                            UUID.randomUUID().toString() + ".png" , "drawing" );
+                    if( imgSaved != null ) {
+                        Toast savedToast = Toast.makeText( getApplicationContext() ,
+                                "Drawing saved to Gallery!" , Toast.LENGTH_SHORT );
+                        savedToast.show();
+                    }
+                    else {
+                        Toast unsavedToast = Toast.makeText( getApplicationContext() ,
+                                "Uh oh! Image could not be saved." , Toast.LENGTH_SHORT );
+                        unsavedToast.show();
+                    }
+                    drawView.destroyDrawingCache();
+                }
+            });
+            saveDialog.setNegativeButton( "Cancel" , new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog , int i) {
+                    dialog.cancel();
+                }
+            });
+
+            saveDialog.show();
+        }
     }
 
     public void paintClicked( View view ) {

@@ -117,7 +117,7 @@ public class MyActivity extends Activity {
 
             drawWord = array[nums[n]];
 
-            word. setText(array[a]);
+            word. setText( array[a] );
             word2.setText( array[b] );
             word3.setText( array[c] );
             word4.setText( array[d] );

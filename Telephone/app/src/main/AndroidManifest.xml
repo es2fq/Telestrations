@@ -20,10 +20,6 @@
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
         </activity>
         <activity
-            android:name=".Home"
-            android:label="@string/title_activity_home" >
-        </activity>
-        <activity
             android:name=".Draw"
             android:label="@string/title_activity_draw" >
         </activity>
