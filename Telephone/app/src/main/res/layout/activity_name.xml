@@ -4,13 +4,13 @@
     android:layout_height="match_parent"
     android:background="#FFCCCCCC"
     android:orientation="vertical"
-    tools:context="song.telephone.Draw">
+    tools:context="song.telephone.Name">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
+        android:text="The word"
         android:id="@+id/word"
         android:layout_gravity="center_horizontal" />
 
@@ -42,18 +42,18 @@
         <!--android:src="@drawable/eraser" />-->
 
         <ImageButton
-        android:id="@+id/save_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:contentDescription="@string/start_new"
-        android:src="@drawable/save" />
+            android:id="@+id/save_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:contentDescription="@string/start_new"
+            android:src="@drawable/save" />
 
         <ImageButton
-        android:id="@+id/check_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:contentDescription="@string/start_new"
-        android:src="@drawable/check" />
+            android:id="@+id/check_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:contentDescription="@string/start_new"
+            android:src="@drawable/check" />
 
     </LinearLayout>
 

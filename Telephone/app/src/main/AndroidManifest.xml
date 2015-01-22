@@ -18,10 +18,19 @@
             </intent-filter>
 
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
         </activity>
         <activity
             android:name=".Draw"
             android:label="@string/title_activity_draw" >
+        </activity>
+        <activity
+            android:name=".Roulette"
+            android:label="@string/title_activity_roulette" >
+        </activity>
+        <activity
+            android:name=".Name"
+            android:label="@string/title_activity_name" >
         </activity>
     </application>
 

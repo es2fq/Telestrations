@@ -21,7 +21,7 @@ import java.util.UUID;
 public class Draw extends Activity implements OnClickListener {
 
     private DrawingView drawView;
-    private ImageButton currPaint , drawBtn , eraseBtn , newBtn , saveBtn;
+    private ImageButton currPaint , drawBtn , eraseBtn , newBtn , saveBtn , checkBtn;
     private float smallBrush , mediumBrush , largeBrush;
 
     TextView word;
@@ -56,11 +56,13 @@ public class Draw extends Activity implements OnClickListener {
 //        eraseBtn = (ImageButton)findViewById(R.id.erase_btn);
         newBtn   = (ImageButton)findViewById(R.id.new_btn);
         saveBtn  = (ImageButton)findViewById(R.id.save_btn);
+        checkBtn = (ImageButton)findViewById(R.id.check_btn);
 
         drawBtn.setOnClickListener( this );
 //        eraseBtn.setOnClickListener( this );
         newBtn.setOnClickListener( this );
         saveBtn.setOnClickListener( this );
+        checkBtn.setOnClickListener( this );
     }
 
     public void onClick( View view )
@@ -199,6 +201,35 @@ public class Draw extends Activity implements OnClickListener {
             });
 
             saveDialog.show();
+        }
+
+        else if( view.getId() == R.id.check_btn ) {
+            AlertDialog.Builder finishDialog = new AlertDialog.Builder( this );
+            finishDialog.setTitle( "Finish drawing" );
+            finishDialog.setMessage( "Are you finished drawing?" );
+            finishDialog.setPositiveButton( "Yes" , new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int i) {
+//                    Intent intent = new Intent( getApplicationContext() , Name.class );
+//                    Bitmap drawing = drawView.getBitmap();
+//                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
+//                    drawing.compress( Bitmap.CompressFormat.PNG , 50 , bs );
+//                    intent.putExtra( "drawing" , bs.toByteArray() );
+//                    startActivity( intent );
+
+                    Intent intent = new Intent( getApplicationContext() , Name.class );
+                    intent.putExtra( "drawing" , new bitmapPasser( drawView.getBitmap() ));
+                    startActivity( intent );
+                }
+            });
+            finishDialog.setNegativeButton( "Cancel" , new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int i) {
+                    dialog.cancel();
+                }
+            });
+
+            finishDialog.show();
         }
     }
 

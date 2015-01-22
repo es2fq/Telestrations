@@ -14,5 +14,7 @@
     <string name="lrg">Large</string>
     <string name="title_activity_home">Home</string>
     <string name="title_activity_draw">Draw</string>
+    <string name="title_activity_roulette">Roulette</string>
+    <string name="title_activity_name">Name</string>
 
 </resources>

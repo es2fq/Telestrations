@@ -120,4 +120,12 @@ public class DrawingView extends View {
         drawCanvas.drawColor( 0 , PorterDuff.Mode.CLEAR );
         invalidate();
     }
+
+    public Bitmap getBitmap() {
+        return canvasBitmap;
+    }
+
+    public void setBitmap( Bitmap newBitmap ) {
+        canvasBitmap = newBitmap;
+    }
 }
