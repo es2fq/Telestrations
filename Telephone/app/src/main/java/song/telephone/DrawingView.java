@@ -24,6 +24,8 @@ public class DrawingView extends View {
 
     private boolean erase = false;
 
+    int width , height;
+
     public DrawingView( Context context , AttributeSet attrs ) {
         super( context , attrs );
         setupDrawing();
@@ -50,6 +52,9 @@ public class DrawingView extends View {
     @Override
     protected void onSizeChanged( int w , int h , int oldw , int oldh ) {
         super.onSizeChanged( w , h , oldw , oldh );
+
+        width = w;
+        height = h;
 
         canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         drawCanvas = new Canvas( canvasBitmap );
@@ -127,5 +132,16 @@ public class DrawingView extends View {
 
     public void setBitmap( Bitmap newBitmap ) {
         canvasBitmap = newBitmap;
+//        drawCanvas.setBitmap( newBitmap );
+    }
+
+    public Canvas getCanvas() {
+        return drawCanvas;
+    }
+
+    public void setCanvas( Canvas newCanvas ) {
+        newCanvas.drawColor( Color.RED );
+        drawCanvas = newCanvas;
+        invalidate();
     }
 }

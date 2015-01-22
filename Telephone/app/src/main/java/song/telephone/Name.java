@@ -1,24 +1,44 @@
 package song.telephone;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 public class Name extends Activity {
 
-    DrawingView drawView;
+//    DrawingView drawView;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_name);
 
-        bitmapPasser drawing = (bitmapPasser)getIntent().getSerializableExtra( "drawing" );
-        drawView.setBitmap( drawing.getBitmap() );
-    }
+        imageView = (ImageView)findViewById(R.id.imageView);
 
+        Bitmap bitmap = null;
+        String fileName = getIntent().getStringExtra( "image" );
+        try {
+            FileInputStream input = this.openFileInput( fileName );
+            bitmap = BitmapFactory.decodeStream( input );
+            input.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        imageView.setImageBitmap( bitmap );
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -80,7 +80,7 @@ public class Roulette extends Activity {
         Random rand = new Random();
         num = rand.nextInt( 4 ) + 2;
 
-        stop = rand.nextInt( 200 ) + 400;
+        stop = rand.nextInt( 300 ) + 400;
 
         textArray.get(count).setBackgroundColor(Color.YELLOW);
 

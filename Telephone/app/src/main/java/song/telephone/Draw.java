@@ -3,8 +3,10 @@ package song.telephone;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
@@ -16,6 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.UUID;
 
 public class Draw extends Activity implements OnClickListener {
@@ -210,16 +215,25 @@ public class Draw extends Activity implements OnClickListener {
             finishDialog.setPositiveButton( "Yes" , new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int i) {
-//                    Intent intent = new Intent( getApplicationContext() , Name.class );
-//                    Bitmap drawing = drawView.getBitmap();
-//                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
-//                    drawing.compress( Bitmap.CompressFormat.PNG , 50 , bs );
-//                    intent.putExtra( "drawing" , bs.toByteArray() );
-//                    startActivity( intent );
+                    Bitmap bitmap = drawView.getBitmap();
 
-                    Intent intent = new Intent( getApplicationContext() , Name.class );
-                    intent.putExtra( "drawing" , new bitmapPasser( drawView.getBitmap() ));
-                    startActivity( intent );
+                    try {
+                        String fileName = "bitmap.png";
+                        FileOutputStream stream = getApplicationContext().openFileOutput(fileName, Context.MODE_PRIVATE);
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+                        stream.close();
+                        bitmap.recycle();
+
+                        Intent intent = new Intent( getApplicationContext() , Name.class );
+                        intent.putExtra( "image" , fileName );
+                        startActivity( intent );
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             });
             finishDialog.setNegativeButton( "Cancel" , new DialogInterface.OnClickListener() {
