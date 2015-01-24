@@ -165,7 +165,7 @@ public class Draw extends Activity implements OnClickListener {
                 }
             });
 
-            newDialog.setNegativeButton( "Cancel" , new DialogInterface.OnClickListener() {
+            newDialog.setNegativeButton( "No" , new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog , int i) {
                     dialog.cancel();
@@ -236,7 +236,7 @@ public class Draw extends Activity implements OnClickListener {
 
                 }
             });
-            finishDialog.setNegativeButton( "Cancel" , new DialogInterface.OnClickListener() {
+            finishDialog.setNegativeButton( "No" , new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int i) {
                     dialog.cancel();
@@ -259,6 +259,11 @@ public class Draw extends Activity implements OnClickListener {
             currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint));
             currPaint = (ImageButton)view;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 
     @Override

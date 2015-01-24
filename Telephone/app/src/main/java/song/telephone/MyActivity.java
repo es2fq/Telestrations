@@ -28,6 +28,11 @@ public class MyActivity extends Activity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -22,7 +25,6 @@ import java.util.Set;
 public class Roulette extends Activity {
 
     TextView word , word2 , word3 , word4 , word5;
-    //    Button button , button2;
     String drawWord;
 
     int wait = 0 , stop = 0;
@@ -35,10 +37,19 @@ public class Roulette extends Activity {
     Handler handler , handler2;
     Runnable runnable ,  runnable2;
 
+    SoundPool sp;
+    int ding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_roulette);
+
+        sp = new SoundPool( 5 , AudioManager.STREAM_MUSIC , 0 );
+
+        ding = sp.load( getApplicationContext() , R.raw.ding , 1 );
+
+        /////////////////////////////////////////////////////
 
         word  = (TextView)findViewById(R.id.word);
         word2 = (TextView)findViewById(R.id.word2);
@@ -55,25 +66,6 @@ public class Roulette extends Activity {
         textArray.add( word5 );
 
         selectWord();
-
-//        button  = (Button)findViewById(R.id.button);
-//        button2 = (Button)findViewById(R.id.button2);
-
-//        button.setOnClickListener( new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent( getApplicationContext() , Draw.class );
-//                intent.putExtra( "word" , drawWord );
-//                startActivity(intent);
-//            }
-//        });
-
-//        button2.setOnClickListener( new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                getWords();
-//            }
-//        });
     }
 
     private void selectWord() {
@@ -89,10 +81,11 @@ public class Roulette extends Activity {
             @Override
             public void run() {
                 highlightWord();
+                sp.play( ding , 1 , 1 , 0 , 0 , 1 );
 
                 if( wait >= stop ) {
                     flashWord();
-                    handler.removeCallbacks( runnable );
+                    handler.removeCallbacks(runnable);
                 }
                 else {
                     if( wait >= 100 ) {
@@ -124,7 +117,7 @@ public class Roulette extends Activity {
         runnable2 = new Runnable() {
             @Override
             public void run() {
-                if( count2 >= 7 ) {
+                if( count2 >= 15 ) {
                     handler2.removeCallbacks( runnable2 );
 
                     drawWord = wordArray.get(count);
@@ -141,11 +134,16 @@ public class Roulette extends Activity {
                         textArray.get(count).setBackgroundColor(Color.WHITE);
                     }
                     count2++;
-                    handler2.postDelayed(this, 500);
+                    handler2.postDelayed(this, 100);
                 }
             }
         };
         runnable2.run();
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 
     @Override
