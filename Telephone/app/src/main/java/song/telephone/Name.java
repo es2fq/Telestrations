@@ -8,15 +8,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.inputmethodservice.ExtractEditText;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -28,8 +25,8 @@ public class Name extends Activity {
     ImageView imageView;
     ExtractEditText input;
     Button button;
-    String str;
-    AlertDialog.Builder nameDialog;
+    String str , word;
+    AlertDialog.Builder nameDialog , answerDialog , againDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +36,14 @@ public class Name extends Activity {
         imageView = (ImageView)findViewById(R.id.imageView);
         button = (Button)findViewById(R.id.button);
 
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+
+        word = extras.getString( "word" );
+        String fileName = extras.getString( "image" );
+
         Bitmap bitmap = null;
-        String fileName = getIntent().getStringExtra( "image" );
+//        String fileName = getIntent().getStringExtra( "image" );
         try {
             FileInputStream input = this.openFileInput( fileName );
             bitmap = BitmapFactory.decodeStream( input );
@@ -56,7 +59,10 @@ public class Name extends Activity {
         //////////////////////////////////////////////
 
         input = (ExtractEditText)findViewById(R.id.input);
+
         nameDialog = new AlertDialog.Builder( this );
+        answerDialog = new AlertDialog.Builder( this );
+        againDialog = new AlertDialog.Builder( this );
 
         input.setOnKeyListener( new View.OnKeyListener() {
             @Override
@@ -90,9 +96,10 @@ public class Name extends Activity {
             nameDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int i) {
-                    Intent intent = new Intent(getApplicationContext(), Draw.class);
-                    intent.putExtra( "word", str );
-                    startActivity(intent);
+//                    Intent intent = new Intent(getApplicationContext(), Draw.class);
+//                    intent.putExtra( "word", str );
+//                    startActivity(intent);
+                    checkAnswer();
                 }
             });
             nameDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -104,6 +111,50 @@ public class Name extends Activity {
 
             nameDialog.show();
         }
+    }
+
+    private void checkAnswer() {
+        String lowerWord = word.replaceAll( "\\s" , "" );
+        lowerWord = lowerWord.toLowerCase();
+        String lowerStr = str.replaceAll( "\\s" , "" );
+        lowerStr = lowerStr.toLowerCase();
+
+        if( lowerStr.equals( lowerWord )) {
+            answerDialog.setTitle( "Yay!" );
+            answerDialog.setMessage( "You got it!" );
+        }
+        else {
+            answerDialog.setTitle( "Darn!" );
+            answerDialog.setMessage( "The word was [" + word + "]" );
+        }
+
+        answerDialog.setPositiveButton( "OK" , new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                playAgain();
+            }
+        });
+
+        answerDialog.show();
+    }
+
+    private void playAgain() {
+        againDialog.setTitle( "Play Again?" );
+        againDialog.setMessage("Do you want to play again?");
+        againDialog.setPositiveButton( "Yes" , new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity( new Intent( getApplicationContext() , Roulette.class ));
+            }
+        });
+        againDialog.setNegativeButton( "No" , new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity( new Intent( getApplicationContext() , MyActivity.class ));
+            }
+        });
+
+        againDialog.show();
     }
 
     @Override

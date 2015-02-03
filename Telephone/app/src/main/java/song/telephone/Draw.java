@@ -3,6 +3,8 @@ package song.telephone;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Set;
 import java.util.UUID;
 
 public class Draw extends Activity implements OnClickListener {
@@ -30,6 +33,10 @@ public class Draw extends Activity implements OnClickListener {
     private float smallBrush , mediumBrush , largeBrush;
 
     TextView word;
+    String drawWord;
+
+    BluetoothAdapter ba;
+    Set<BluetoothDevice> pairedDevices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +46,7 @@ public class Draw extends Activity implements OnClickListener {
         word = (TextView)findViewById(R.id.word);
 
         Intent intent = getIntent();
-        String drawWord = intent.getStringExtra("word");
+        drawWord = intent.getStringExtra("word");
 
         word.setText( drawWord );
 
@@ -68,6 +75,19 @@ public class Draw extends Activity implements OnClickListener {
         newBtn.setOnClickListener( this );
         saveBtn.setOnClickListener( this );
         checkBtn.setOnClickListener( this );
+
+        //////////////////////////////////////////////////////////////////////
+
+//        ba = BluetoothAdapter.getDefaultAdapter();
+//
+//        if( ba == null ) {
+//            Toast.makeText( getApplicationContext() , "Your device does not support bluetooth." , Toast.LENGTH_SHORT ).show();
+//        }
+//
+//        Intent turnOn = new Intent( BluetoothAdapter.ACTION_REQUEST_ENABLE );
+//        startActivityForResult( turnOn , 0 );
+//
+//        pairedDevices = ba.getBondedDevices();
     }
 
     public void onClick( View view )
@@ -225,8 +245,16 @@ public class Draw extends Activity implements OnClickListener {
                         stream.close();
                         bitmap.recycle();
 
+                        Bundle extras = new Bundle();
+                        extras.putString( "image" , fileName );
+                        extras.putString( "word"  , drawWord );
+
+//                        Intent intent = new Intent( getApplicationContext() , Name.class );
+//                        intent.putExtra( "image" , fileName );
+//                        startActivity( intent );
+
                         Intent intent = new Intent( getApplicationContext() , Name.class );
-                        intent.putExtra( "image" , fileName );
+                        intent.putExtras( extras );
                         startActivity( intent );
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
