@@ -34,6 +34,10 @@
             android:name=".Name"
             android:label="@string/title_activity_name" >
         </activity>
+        <activity
+            android:name=".Bluetooth"
+            android:label="@string/title_activity_bluetooth" >
+        </activity>
     </application>
 
 </manifest>

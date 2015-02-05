@@ -77,17 +77,6 @@ public class Draw extends Activity implements OnClickListener {
         checkBtn.setOnClickListener( this );
 
         //////////////////////////////////////////////////////////////////////
-
-//        ba = BluetoothAdapter.getDefaultAdapter();
-//
-//        if( ba == null ) {
-//            Toast.makeText( getApplicationContext() , "Your device does not support bluetooth." , Toast.LENGTH_SHORT ).show();
-//        }
-//
-//        Intent turnOn = new Intent( BluetoothAdapter.ACTION_REQUEST_ENABLE );
-//        startActivityForResult( turnOn , 0 );
-//
-//        pairedDevices = ba.getBondedDevices();
     }
 
     public void onClick( View view )
