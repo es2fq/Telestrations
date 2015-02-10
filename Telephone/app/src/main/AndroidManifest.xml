@@ -38,6 +38,14 @@
             android:name=".Bluetooth"
             android:label="@string/title_activity_bluetooth" >
         </activity>
+        <activity
+            android:name=".Host"
+            android:label="@string/title_activity_host" >
+        </activity>
+        <activity
+            android:name=".Client"
+            android:label="@string/title_activity_client" >
+        </activity>
     </application>
 
 </manifest>

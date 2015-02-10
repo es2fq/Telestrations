@@ -11,7 +11,7 @@ import android.widget.Button;
 
 public class MyActivity extends Activity {
 
-    Button button , button2;
+    Button button , button2 , button3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,14 @@ public class MyActivity extends Activity {
         button2.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Bluetooth.class));
+                startActivity(new Intent(getApplicationContext(), Host.class));
+            }
+        });
+
+        button3.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Client.class));
             }
         });
     }

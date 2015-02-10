@@ -17,5 +17,7 @@
     <string name="title_activity_roulette">Roulette</string>
     <string name="title_activity_name">Name</string>
     <string name="title_activity_bluetooth">Bluetooth</string>
+    <string name="title_activity_host">Host</string>
+    <string name="title_activity_client">Client</string>
 
 </resources>
